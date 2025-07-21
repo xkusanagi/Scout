@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    ports:
+      - "80:8080"  # Map to port 80 for public access
+    environment:
+      # Basic Configuration
+      - WEBUI_NAME=Scout AI
+      - WEBUI_URL=http://your-droplet-ip  # Replace with your actual droplet IP/domain
+      
+      # Security
+      - WEBUI_AUTH=True
+      - ENABLE_SIGNUP=True  # Set to False after creating your admin account
+      - DEFAULT_USER_ROLE=user
+      
+      # Performance
+      - ENABLE_COMPRESSION_MIDDLEWARE=True
+      - ENABLE_BASE_MODELS_CACHE=True
+      
+      # RAG Configuration
+      - RAG_EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - CHUNK_SIZE=1000
+      - CHUNK_OVERLAP=200
+      
+      # Ollama Configuration (if using local Ollama)
+      - OLLAMA_BASE_URL=http://ollama:11434
+      
+      # Storage
+      - UPLOAD_DIR=/app/backend/data/uploads
+      
+    volumes:
+      - open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    networks:
+      - webui_network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"  # Expose Ollama API
+    volumes:
+      - ollama:/root/.ollama
+    networks:
+      - webui_network
+    # Uncomment for GPU support on DigitalOcean GPU droplets
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  open-webui:
+  ollama:
+
+networks:
+  webui_network:
+    driver: bridge
