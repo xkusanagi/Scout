@@ -14,7 +14,7 @@ services:
       
       # Security
       - WEBUI_AUTH=True
-      - ENABLE_SIGNUP=False  # Disabled for security - create users via admin panel
+      - ENABLE_SIGNUP=True  # Temporarily enabled for admin account creation
       - DEFAULT_USER_ROLE=user
       
       # Performance
