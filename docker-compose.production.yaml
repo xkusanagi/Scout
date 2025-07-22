@@ -39,6 +39,8 @@ services:
       - ENABLE_MODEL_FILTER=True
       - MODEL_FILTER_ENABLED=True
       - ENABLE_ARENA_MODELS=False
+      - STREAMING_TIMEOUT=30
+      - ENABLE_STREAMING=True
       
     volumes:
       - open-webui:/app/backend/data

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  open-webui-staging:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui-staging
+    restart: unless-stopped
+    ports:
+      - "8081:8080"  # Different port for staging
+    environment:
+      # Staging Configuration
+      - WEBUI_NAME=Scout AI (Staging)
+      - WEBUI_URL=https://staging.x2501.com  # Your staging subdomain
+      
+      # Security (more relaxed for testing)
+      - WEBUI_AUTH=True
+      - ENABLE_SIGNUP=True  # Allow signups for testing
+      - DEFAULT_USER_ROLE=user
+      
+      # Performance
+      - ENABLE_COMPRESSION_MIDDLEWARE=True
+      - ENABLE_BASE_MODELS_CACHE=True
+      
+      # RAG Configuration
+      - RAG_EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - CHUNK_SIZE=1000
+      - CHUNK_OVERLAP=200
+      
+      # Ollama Configuration
+      - OLLAMA_BASE_URL=http://ollama-staging:11434
+      
+      # Storage
+      - UPLOAD_DIR=/app/backend/data/uploads
+      
+    volumes:
+      - open-webui-staging:/app/backend/data
+    depends_on:
+      - ollama-staging
+    networks:
+      - webui_staging_network
+
+  ollama-staging:
+    image: ollama/ollama:latest
+    container_name: ollama-staging
+    restart: unless-stopped
+    ports:
+      - "11435:11434"  # Different port for staging
+    volumes:
+      - ollama-staging:/root/.ollama
+    networks:
+      - webui_staging_network
+
+volumes:
+  open-webui-staging:
+  ollama-staging:
+
+networks:
+  webui_staging_network:
+    driver: bridge
