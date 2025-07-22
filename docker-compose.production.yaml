@@ -6,7 +6,7 @@ services:
     container_name: open-webui
     restart: unless-stopped
     ports:
-      - "80:8080"  # Map to port 80 for public access
+      - "8080:8080"  # Internal port for nginx proxy
     environment:
       # Basic Configuration
       - WEBUI_NAME=Scout
