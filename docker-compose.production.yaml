@@ -14,7 +14,7 @@ services:
       
       # Security
       - WEBUI_AUTH=True
-      - ENABLE_SIGNUP=True  # Set to False after creating your admin account
+      - ENABLE_SIGNUP=False  # Disabled for security - create users via admin panel
       - DEFAULT_USER_ROLE=user
       
       # Performance
@@ -31,6 +31,14 @@ services:
       
       # Storage
       - UPLOAD_DIR=/app/backend/data/uploads
+      
+      # Admin Features
+      - ENABLE_ADMIN_CHAT_ACCESS=True
+      
+      # Model Configuration
+      - ENABLE_MODEL_FILTER=True
+      - MODEL_FILTER_ENABLED=True
+      - ENABLE_ARENA_MODELS=False
       
     volumes:
       - open-webui:/app/backend/data
