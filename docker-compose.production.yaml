@@ -9,7 +9,7 @@ services:
       - "80:8080"  # Map to port 80 for public access
     environment:
       # Basic Configuration
-      - WEBUI_NAME=Scout AI
+      - WEBUI_NAME=Scout
       - WEBUI_URL=http://your-droplet-ip  # Replace with your actual droplet IP/domain
       
       # Security
