@@ -10,11 +10,12 @@ services:
     environment:
       # Basic Configuration
       - WEBUI_NAME=Scout
-      - WEBUI_URL=http://your-droplet-ip  # Replace with your actual droplet IP/domain
+      - WEBUI_URL=http://your-droplet-ip134.199.163.37  # Replace with your actual droplet IP/domain
       
       # Security
       - WEBUI_AUTH=True
-      - ENABLE_SIGNUP=False  # Disabled for security - create users via admin panel
+      - ENABLE_SIGNUP=True  # Disabled for security - create users via admin panel
+      - ENABLE_SIGNUP_ADMIN=True
       - DEFAULT_USER_ROLE=user
       
       # Performance
@@ -34,6 +35,7 @@ services:
       
       # Admin Features
       - ENABLE_ADMIN_CHAT_ACCESS=True
+      - ENABLE_ADMIN_EXPORT=True
       
       # Model Configuration
       - ENABLE_MODEL_FILTER=True
