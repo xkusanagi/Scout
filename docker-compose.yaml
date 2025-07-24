@@ -18,6 +18,9 @@ services:
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
+      - ./static/static/favicon.svg:/app/backend/static/favicon.svg
+      - ./static/static/favicon.png:/app/backend/static/favicon.png
+      - ./src/lib/constants.ts:/app/constants.ts
     depends_on:
       - ollama
     ports:
@@ -25,6 +28,7 @@ services:
     environment:
       - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'WEBUI_SECRET_KEY='
+      - 'WEBUI_NAME=Scout'
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
