@@ -64,6 +64,11 @@
 	let loaded = false;
 	let tokenTimer = null;
 
+	// Force Scout branding - reactive statement to ensure it never changes
+	$: if ($WEBUI_NAME !== 'Scout') {
+		WEBUI_NAME.set('Scout');
+	}
+
 	const BREAKPOINT = 768;
 
 	const setupSocket = async (enableWebsocket) => {
@@ -551,6 +556,8 @@
 		try {
 			backendConfig = await getBackendConfig();
 			console.log('Backend config:', backendConfig);
+			// Override WEBUI_NAME to ensure Scout branding - force it regardless of backend config
+			WEBUI_NAME.set('Scout');
 		} catch (error) {
 			console.error('Error loading backend config:', error);
 		}
@@ -590,6 +597,8 @@
 					if (sessionUser) {
 						await user.set(sessionUser);
 						await config.set(await getBackendConfig());
+						// Override WEBUI_NAME to ensure Scout branding
+						WEBUI_NAME.set('Scout');
 					} else {
 						// Redirect Invalid Session User to /auth Page
 						localStorage.removeItem('token');

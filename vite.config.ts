@@ -16,6 +16,22 @@ export default defineConfig({
 			]
 		})
 	],
+	server: {
+		proxy: {
+			'/api': {
+				target: 'https://demo.x2501.com',
+				changeOrigin: true,
+				secure: true,
+				timeout: 10000
+			},
+			'/ollama': {
+				target: 'https://demo.x2501.com',
+				changeOrigin: true,
+				secure: true,
+				timeout: 10000
+			}
+		}
+	},
 	define: {
 		APP_VERSION: JSON.stringify(process.env.npm_package_version),
 		APP_BUILD_HASH: JSON.stringify(process.env.APP_BUILD_HASH || 'dev-build')
